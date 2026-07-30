@@ -865,6 +865,17 @@
             text-shadow: 0 3px 12px rgba(15,42,69,0.25);
         }
 
+        @media (max-width: 768px) and (hover: none) and (pointer: coarse) {
+            #screen-char > div {
+                padding-top: clamp(18px, 4vw, 26px);
+            }
+
+            #screen-char .screen-char-title {
+                margin-top: clamp(8px, 2.5vw, 12px);
+                margin-bottom: clamp(14px, 4vw, 20px);
+            }
+        }
+
         h2 {
             color: var(--dark-outline);
             font-size: clamp(24px, 6vw, 36px);
