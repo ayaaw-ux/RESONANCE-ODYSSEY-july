@@ -2788,6 +2788,19 @@
             }
         }
 
+        @media (max-width: 768px) and (hover: none) and (pointer: coarse) {
+            #adventure-overlay .adventure-player {
+                width: 84px;
+                height: auto;
+                max-width: 84px;
+                max-height: 84px;
+                bottom: 14%;
+                font-size: 56px;
+                transform: translateX(-50%) translateY(18px);
+                transform-origin: center bottom;
+            }
+        }
+
         @media (max-width: 480px) {
             .adventure-player {
                 width: clamp(56px, 12vw, 120px);
@@ -6478,7 +6491,7 @@
 
             const player = document.getElementById('adventure-player');
             player.style.left = '50%';
-            player.style.bottom = window.matchMedia('(min-width: 768px)').matches ? '8%' : '16%';
+            player.style.bottom = window.matchMedia('(min-width: 768px)').matches ? '8%' : '14%';
             setPlayerAvatar();
             // pastikan token papan tersembunyi saat mini-game berjalan
             hideBoardToken();
@@ -6557,7 +6570,8 @@
             }
             const player = document.getElementById('adventure-player');
             player.style.left = `${adventureState.playerPos}%`;
-            player.style.transform = 'translateX(-50%)';
+            const isMobileCoarse = window.matchMedia('(max-width: 768px) and (hover: none) and (pointer: coarse)').matches;
+            player.style.transform = `translateX(-50%)${isMobileCoarse ? ' translateY(18px)' : ''}`;
 
             // Spawn timer (ms)
             adventureState.spawnTimer -= dt;
