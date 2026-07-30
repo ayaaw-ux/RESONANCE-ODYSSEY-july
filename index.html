@@ -760,7 +760,6 @@
                 margin-bottom: 0 !important;
             }
         }
-    </style>
         .btn-dir {
             border-color: rgba(127, 167, 225, 0.32);
         }
@@ -5337,32 +5336,42 @@
 
         function closeInfoModal() {
             document.getElementById('info-modal').classList.remove('show');
-            // Reset form
-            document.getElementById('player-name-field').value = '';
-            document.getElementById('school-name-field').value = '';
-            document.getElementById('text-input').value = '';
+            // Reset fields only when they exist in the DOM.
+            const playerNameField = document.getElementById('player-name-field');
+            const schoolNameField = document.getElementById('school-name-field');
+            const textInput = document.getElementById('text-input');
+            if (playerNameField) playerNameField.value = '';
+            if (schoolNameField) schoolNameField.value = '';
+            if (textInput) textInput.value = '';
             clearPhoto();
         }
 
         function clearPhoto() {
-            document.getElementById('photo-input').value = '';
-            document.getElementById('photo-preview-img').src = '';
-            document.querySelector('.photo-preview').classList.remove('show');
+            const photoInput = document.getElementById('photo-input');
+            const photoPreviewImg = document.getElementById('photo-preview-img');
+            const photoPreview = document.querySelector('.photo-preview');
+            if (photoInput) photoInput.value = '';
+            if (photoPreviewImg) photoPreviewImg.src = '';
+            if (photoPreview) photoPreview.classList.remove('show');
         }
 
         function saveInfoAndStartGame() {
-            const playerName = document.getElementById('player-name-field').value || 'Petualang';
-            const schoolName = document.getElementById('school-name-field').value || 'Sekolah Nusantara';
-            const textInfo = document.getElementById('text-input').value;
-            const photoFile = document.getElementById('photo-input').files[0];
+            const playerNameField = document.getElementById('player-name-field');
+            const schoolNameField = document.getElementById('school-name-field');
+            const textInput = document.getElementById('text-input');
+            const photoInput = document.getElementById('photo-input');
+
+            const playerName = (playerNameField?.value) || 'Petualang';
+            const schoolName = (schoolNameField?.value) || 'Sekolah Nusantara';
+            const textInfo = textInput?.value || '';
+            const photoFile = photoInput?.files?.[0];
 
             // Simpan info ke state/localStorage jika diperlukan
             state.playerName = playerName;
             state.schoolName = schoolName;
             state.infoText = textInfo;
 
-            // Handle photo jika ada
-            if (photoFile) {
+            if (photoFile && typeof FileReader !== 'undefined') {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     state.userPhoto = e.target.result;
